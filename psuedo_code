@@ -1,0 +1,19 @@
+'''
+We should have an array "F" that corresponds to "n" different features, and an array "w" that corresponds to "n" weights
+where w(k) is the weight for F(k). F(k) will depend on current state "s" and possible next action "a",
+it will have a value 1 if the given feature will be present in the resulting state if action a is taken,
+and 0 otherwise.
+
+
+List of features:
+1: goal state (not sure if this is necessary, but it could have a super high weight value)
+2: 1 side solved (solved meaning all one color)
+3: 2 sides solved
+4: 3 sides solved
+5: 4 sides solved
+6: 5 sides solved
+7:
+'''
+
+
+
