@@ -10,6 +10,7 @@ O = 'O'  # orange
 W = 'W'  # white
 
 COLORS = [R,B,G,Y,O,W]
+NOT_COLORS = [1,2,3,4,5,6]
 
 class State:
     def __init__(self, front, back, left, right, top, under):
@@ -35,62 +36,91 @@ class State:
         return toReturn
 
     def __eq__(self, other):
-        
+        global COLORS
+        colors = list(COLORS)
         
         #front
-        selfStrRep.append(self.front[0][0])
-        otherStrRep.append(other.front[0][0])
-        selfStrRep.append(self.front[0][1])
-        otherStrRep.append(other.front[0][1])
-        selfStrRep.append(self.front[1][0])
-        otherStrRep.append(other.front[1][0])
-        selfStrRep.append(self.front[1][1])
-        otherStrRep.append(other.front[1][1])
+        selfRep.append(self.front[0][0])
+        otherRep.append(other.front[0][0])
+        selfRep.append(self.front[0][1])
+        otherRep.append(other.front[0][1])
+        selfRep.append(self.front[1][0])
+        otherRep.append(other.front[1][0])
+        selfRep.append(self.front[1][1])
+        otherRep.append(other.front[1][1])
         #left
-        selfStrRep.append(self.left[0][0])
-        otherStrRep.append(other.left[0][0])
-        selfStrRep.append(self.left[0][1])
-        otherStrRep.append(other.left[0][1])
-        selfStrRep.append(self.left[1][0])
-        otherStrRep.append(other.left[1][0])
-        selfStrRep.append(self.left[1][1])
-        otherStrRep.append(other.left[1][1])
+        selfRep.append(self.left[0][0])
+        otherRep.append(other.left[0][0])
+        selfRep.append(self.left[0][1])
+        otherRep.append(other.left[0][1])
+        selfRep.append(self.left[1][0])
+        otherRep.append(other.left[1][0])
+        selfRep.append(self.left[1][1])
+        otherRep.append(other.left[1][1])
         #back
-        selfStrRep.append(self.back[0][0])
-        otherStrRep.append(other.back[0][0])
-        selfStrRep.append(self.back[0][1])
-        otherStrRep.append(other.back[0][1])
-        selfStrRep.append(self.back[1][0])
-        otherStrRep.append(other.back[1][0])
-        selfStrRep.append(self.back[1][1])
-        otherStrRep.append(other.back[1][1])
+        selfRep.append(self.back[0][0])
+        otherRep.append(other.back[0][0])
+        selfRep.append(self.back[0][1])
+        otherRep.append(other.back[0][1])
+        selfRep.append(self.back[1][0])
+        otherRep.append(other.back[1][0])
+        selfRep.append(self.back[1][1])
+        otherRep.append(other.back[1][1])
         #right
-        selfStrRep.append(self.right[0][0])
-        otherStrRep.append(other.right[0][0])
-        selfStrRep.append(self.right[0][1])
-        otherStrRep.append(other.right[0][1])
-        selfStrRep.append(self.right[1][0])
-        otherStrRep.append(other.right[1][0])
-        selfStrRep.append(self.right[1][1])
-        otherStrRep.append(other.right[1][1])
+        selfRep.append(self.right[0][0])
+        otherRep.append(other.right[0][0])
+        selfRep.append(self.right[0][1])
+        otherRep.append(other.right[0][1])
+        selfRep.append(self.right[1][0])
+        otherRep.append(other.right[1][0])
+        selfRep.append(self.right[1][1])
+        otherRep.append(other.right[1][1])
         #top
-        selfStrRep.append(self.top[0][0])
-        otherStrRep.append(other.top[0][0])
-        selfStrRep.append(self.top[0][1])
-        otherStrRep.append(other.top[0][1])
-        selfStrRep.append(self.top[1][0])
-        otherStrRep.append(other.top[1][0])
-        selfStrRep.append(self.top[1][1])
-        otherStrRep.append(other.top[1][1])
+        selfRep.append(self.top[0][0])
+        otherRep.append(other.top[0][0])
+        selfRep.append(self.top[0][1])
+        otherRep.append(other.top[0][1])
+        selfRep.append(self.top[1][0])
+        otherRep.append(other.top[1][0])
+        selfRep.append(self.top[1][1])
+        otherRep.append(other.top[1][1])
         #under
-        selfStrRep.append(self.under[0][0])
-        otherStrRep.append(other.under[0][0])
-        selfStrRep.append(self.under[0][1])
-        otherStrRep.append(other.under[0][1])
-        selfStrRep.append(self.under[1][0])
-        otherStrRep.append(other.under[1][0])
-        selfStrRep.append(self.under[1][1])
-        otherStrRep.append(other.under[1][1])
+        selfRep.append(self.under[0][0])
+        otherRep.append(other.under[0][0])
+        selfRep.append(self.under[0][1])
+        otherRep.append(other.under[0][1])
+        selfRep.append(self.under[1][0])
+        otherRep.append(other.under[1][0])
+        selfRep.append(self.under[1][1])
+        otherRep.append(other.under[1][1])
+        
+        selfDict = {}
+        otherDict = {}
+        remainingColorsSelf = list(NOT_COLORS)
+        remainingColorsOther = list(NOT_COLORS)
+        for j in range(len(selfRep)):
+            currentColorSelf = selfRep[j]
+            currentColorOther = otherRep[j]
+            
+            if currentColorSelf in selfDict:
+                selfRep[j] = selfDict[currentColorSelf]
+            else:
+                nextColorSelf = remainingColorsSelf.pop()
+                selfDict[currentColorSelf] = nextColorSelf
+                selfRep[j] = nextColorSelf
+            
+            if currentColorOther in otherDict:
+                otherRep[j] = otherDict[currentColorOther]
+            else:
+                nextColorOther = remainingColorsOther.pop()
+                otherDict[currentColorOther] = nextColorOther
+                otherRep[j] = nextColorOther
+        
+        for k in range(len(selfRep)):
+            if selfRep[k] != otherRep[k]:
+                return False
+        
+        return True
 
     def __hash__(self):
         return (self.__str__()).__hash__()
