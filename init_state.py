@@ -20,3 +20,5 @@ initial = {'F': [[O, O], [RE, RE]],  # front face
 
 # to solve: F2, R2, U2 <- check this
 # the action F2 means to rotate the F (front) face 180 degrees etc.
+
+# TEST
