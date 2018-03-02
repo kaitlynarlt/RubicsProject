@@ -9,6 +9,7 @@ Y = 'Y'  # yellow
 O = 'O'  # orange
 W = 'W'  # white
 
+COLORS = [R,B,G,Y,O,W]
 
 class State:
     def __init__(self, front, back, left, right, top, under):
@@ -359,3 +360,20 @@ class State:
         self.top[0][1] = self.top[1][1]
         self.top[1][1] = self.top[1][0]
         self.top[1][0] = temp1
+        
+    def is_goal_state(self):
+        global COLORS
+        colors = list(COLORS)
+        sides = [self.front, self.right, self.back, self.left, self.top, self.under] #use is read only
+        
+        for side in sides:
+            currentColor = side[0][0]
+            if currentColor in colors:
+                #haven't used this color yet
+                colors.remove(currentColor)
+            else:
+                #have found this color twice
+                return False
+            if not (side[0][0] == side[0][1] and side[0][1] == side[1][1] and side[1][1] == side[1][0]):
+                return False
+    
