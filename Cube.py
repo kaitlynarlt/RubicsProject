@@ -31,9 +31,10 @@ Class State:
         toReturn += '      | ' + self.under[0][0] + ' ' + slef.under[0][1] + ' |\n'
         toReturn += '      | ' + self.under[1][0] + ' ' + self.under[1][1] + ' |\n'
         toReturn += '      + - - +\n' 
+        return toReturn
 
-
-
+    def __hash__(self):
+        return (self.__str__()).__hash__()
 # example string representation
 #          + - - +
 #          | T T |
