@@ -24,13 +24,13 @@ class State:
     def __str__(self):
         toReturn = ''
         toReturn += '      + - - +\n' 
-        toReturn += '      | ' + self.top[0][0] + ' ' + slef.top[0][1] + ' |\n'
+        toReturn += '      | ' + self.top[0][0] + ' ' + self.top[0][1] + ' |\n'
         toReturn += '      | ' + self.top[1][0] + ' ' + self.top[1][1] + ' |\n'
         toReturn += '+ - - + - - + - - + - - +\n'
         toReturn += '| ' + self.left[0][0] + ' ' + self.left[0][1] + ' | ' + self.front[0][0] + ' ' + self.front[0][1] + ' | ' + self.right[0][0] + ' ' + self.right[0][1] + ' | ' + self.back[0][0] + ' ' + self.back[0][1] + ' |\n'
         toReturn += '| ' + self.left[1][0] + ' ' + self.left[1][1] + ' | ' + self.front[1][0] + ' ' + self.front[1][1] + ' | ' + self.right[1][0] + ' ' + self.right[1][1] + ' | ' + self.back[1][0] + ' ' + self.back[1][1] + ' |\n'
         toReturn += '+ - - + - - + - - + - - +\n'
-        toReturn += '      | ' + self.under[0][0] + ' ' + slef.under[0][1] + ' |\n'
+        toReturn += '      | ' + self.under[0][0] + ' ' + self.under[0][1] + ' |\n'
         toReturn += '      | ' + self.under[1][0] + ' ' + self.under[1][1] + ' |\n'
         toReturn += '      + - - +\n' 
         return toReturn
@@ -464,4 +464,4 @@ class State:
                 return False
             if not (side[0][0] == side[0][1] and side[0][1] == side[1][1] and side[1][1] == side[1][0]):
                 return False
-    
+        return True
