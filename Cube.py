@@ -62,16 +62,22 @@ Class State:
     #below are the 12 possible moves coresponding to the moves in the image https://smhttp-ssl-62406.nexcesscdn.net/resources/images/solve-it/2x2-moves.jpg
     def rotate_right(self):
         #rotate the strip
+        #save f
         temp1 = self.front[0][1]
         temp2 = self.front[1][1]
+        #move u->f
         self.front[0][1] = self.under[0][1]
         self.front[1][1] = self.under[1][1]
+        #move b->u
         self.under[0][1] = self.back[1][0]
         self.under[1][1] = self.back[0][0]
+        #move t->b
         self.back[1][0] = self.top[0][1]
         self.back[0][0] = self.top[1][1]
+        #move f->t
         self.top[0][1] = temp1
         self.top[1][1] = temp2
+        
         #rotate the side
         temp1 = self.right[0][0]
         self.right[0][0] = self.right[1][0]
@@ -81,13 +87,126 @@ Class State:
         
     def rotate_right_inverse(self):
         #rotate the strip
+        #save f
         temp1 = self.front[0][1]
         temp2 = self.front[1][1]
+        #move t->f
         self.front[0][1] = self.top[0][1]
         self.front[1][1] = self.top[1][1]
+        #move b->t
         self.top[0][1] = self.back[1][0]
         self.top[1][1] = self.back[0][0]
+        #move u->b
         self.back[1][0] = self.under[0][1]
         self.back[0][0] = self.under[1][1]
+        #move f->u
         self.under[0][1] = temp1
         self.under[1][1] = temp2
+        
+        #rotate the side
+        temp1 = self.right[0][0]
+        self.right[0][0] = self.right[0][1]
+        self.right[0][1] = self.right[1][1]
+        self.right[1][1] = self.right[1][0]
+        self.right[1][0] = temp1
+        
+    def rotate_left(self):
+        #rotate the strip
+        #save f
+        temp1 = self.front[0][0]
+        temp2 = self.front[1][0]
+        #move t->f
+        self.front[0][0] = self.top[0][0]
+        self.front[1][0] = self.top[1][0]
+        #move b->t
+        self.top[0][0] = self.back[1][1]
+        self.top[1][0] = self.back[0][1]
+        #move u->b
+        self.back[1][1] = self.under[0][0]
+        self.back[0][1] = self.under[1][0]
+        #move f->u
+        self.under[0][0] = temp1
+        self.under[1][0] = temp2
+        
+        #rotate the side
+        temp1 = self.left[0][0]
+        self.left[0][0] = self.left[1][0]
+        self.left[1][0] = self.left[1][1]
+        self.left[1][1] = self.left[0][1]
+        self.left[0][1] = temp1
+        
+    def rotate_left_inverse(self):
+        #rotate the strip
+        #save f
+        temp1 = self.front[0][0]
+        temp2 = self.front[1][0]
+        #move u->f
+        self.front[0][0] = self.under[0][0]
+        self.front[1][0] = self.under[1][0]
+        #move b->u
+        self.under[0][0] = self.back[1][1]
+        self.under[1][0] = self.back[0][1]
+        #move t->b
+        self.back[1][1] = self.top[0][0]
+        self.back[0][1] = self.top[1][0]
+        #move f->t
+        self.top[0][0] = temp1
+        self.top[1][0] = temp2
+        
+        #rotate the side
+        temp1 = self.left[0][0]
+        self.left[0][0] = self.left[0][1]
+        self.left[0][1] = self.left[1][1]
+        self.left[1][1] = self.left[1][0]
+        self.left[1][0] = temp1
+        
+    def rotate_back(self):
+        #rotate the strip
+        #save t
+        temp1 = self.top[0][0]
+        temp2 = self.top[0][1]
+        #move r->t
+        self.top[0][0] = self.right[0][1]
+        self.top[0][1] = self.right[1][1]
+        #move u->r
+        self.right[0][1] = self.under[1][1]
+        self.right[1][1] = self.under[1][0]
+        #move l->u
+        self.under[1][1] = self.left[1][0]
+        self.under[1][0] = self.left[0][0]
+        #move t->l
+        self.left[1][0] = temp1
+        self.left[0][0] temp2
+        
+        #rotate the side
+        temp1 = self.back[0][0]
+        self.back[0][0] = self.back[1][0]
+        self.back[1][0] = self.back[1][1]
+        self.back[1][1] = self.back[0][1]
+        self.back[0][1] = temp1
+        
+    def rotate_back_inverse(self):
+        #rotate the strip
+        #save t
+        temp1 = self.top[0][0]
+        temp2 = self.top[0][1]
+        #move l->t
+        self.top[0][0] = self.left[1][0]
+        self.top[0][1] = self.left[0][0]
+        #move u->l
+        self.left[1][0] = self.under[1][1]
+        self.left[0][0] = self.under[1][0]
+        #move r->u
+        self.under[1][1] = self.right[0][1]
+        self.under[1][0] = self.right[1][1]
+        #move t->r
+        self.right[0][1] = temp1
+        self.right[1][1] = temp2
+        
+        #rotate the side
+        temp1 = self.back[0][0]
+        self.back[0][0] = self.back[0][1]
+        self.back[0][1] = self.back[1][1]
+        self.back[1][1] = self.back[1][0]
+        self.back[1][0] = temp1
+        
