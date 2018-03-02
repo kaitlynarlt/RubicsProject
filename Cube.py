@@ -34,6 +34,9 @@ class State:
         toReturn += '      + - - +\n' 
         return toReturn
 
+    def __eq__(self, other):
+        
+
     def __hash__(self):
         return (self.__str__()).__hash__()
 # example string representation
