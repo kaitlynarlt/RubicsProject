@@ -36,6 +36,61 @@ class State:
 
     def __eq__(self, other):
         
+        
+        #front
+        selfStrRep.append(self.front[0][0])
+        otherStrRep.append(other.front[0][0])
+        selfStrRep.append(self.front[0][1])
+        otherStrRep.append(other.front[0][1])
+        selfStrRep.append(self.front[1][0])
+        otherStrRep.append(other.front[1][0])
+        selfStrRep.append(self.front[1][1])
+        otherStrRep.append(other.front[1][1])
+        #left
+        selfStrRep.append(self.left[0][0])
+        otherStrRep.append(other.left[0][0])
+        selfStrRep.append(self.left[0][1])
+        otherStrRep.append(other.left[0][1])
+        selfStrRep.append(self.left[1][0])
+        otherStrRep.append(other.left[1][0])
+        selfStrRep.append(self.left[1][1])
+        otherStrRep.append(other.left[1][1])
+        #back
+        selfStrRep.append(self.back[0][0])
+        otherStrRep.append(other.back[0][0])
+        selfStrRep.append(self.back[0][1])
+        otherStrRep.append(other.back[0][1])
+        selfStrRep.append(self.back[1][0])
+        otherStrRep.append(other.back[1][0])
+        selfStrRep.append(self.back[1][1])
+        otherStrRep.append(other.back[1][1])
+        #right
+        selfStrRep.append(self.right[0][0])
+        otherStrRep.append(other.right[0][0])
+        selfStrRep.append(self.right[0][1])
+        otherStrRep.append(other.right[0][1])
+        selfStrRep.append(self.right[1][0])
+        otherStrRep.append(other.right[1][0])
+        selfStrRep.append(self.right[1][1])
+        otherStrRep.append(other.right[1][1])
+        #top
+        selfStrRep.append(self.top[0][0])
+        otherStrRep.append(other.top[0][0])
+        selfStrRep.append(self.top[0][1])
+        otherStrRep.append(other.top[0][1])
+        selfStrRep.append(self.top[1][0])
+        otherStrRep.append(other.top[1][0])
+        selfStrRep.append(self.top[1][1])
+        otherStrRep.append(other.top[1][1])
+        #under
+        selfStrRep.append(self.under[0][0])
+        otherStrRep.append(other.under[0][0])
+        selfStrRep.append(self.under[0][1])
+        otherStrRep.append(other.under[0][1])
+        selfStrRep.append(self.under[1][0])
+        otherStrRep.append(other.under[1][0])
+        selfStrRep.append(self.under[1][1])
+        otherStrRep.append(other.under[1][1])
 
     def __hash__(self):
         return (self.__str__()).__hash__()
