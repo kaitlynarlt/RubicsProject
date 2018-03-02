@@ -311,5 +311,51 @@ Class State:
         self.front[0][1] = temp1
         
     def rotate_top(self): #'U' in image
-    
+        #rotate the strip
+        #save f
+        temp1 = self.front[0][0]
+        temp2 = self.front[0][1]
+        #move r->f
+        self.front[0][0] = self.right[0][0]
+        self.front[0][1] = self.right[0][1]
+        #move b->r
+        self.right[0][0] = self.back[0][0]
+        self.right[0][1] = self.back[0][1]
+        #move l->b
+        self.back[0][0] = self.left[0][0]
+        self.back[0][1] = self.left[0][1]
+        #move f->l
+        self.left[0][0] = tmep1
+        self.left[0][1] = temp2
+        
+        #rotate the side
+        temp1 = self.top[0][0]
+        self.top[0][0] = self.top[1][0]
+        self.top[1][0] = self.top[1][1]
+        self.top[1][1] = self.top[0][1]
+        self.top[0][1] = temp1
+        
     def rotate_top_inverse(self): #'Ui' in image
+        #rotate the strip
+        #save f
+        temp1 = self.front[0][0]
+        temp2 = self.front[0][1]
+        #move l->f
+        self.front[0][0] = self.left[0][0]
+        self.front[0][1] = self.left[0][1]
+        #move b->l
+        self.left[0][0] = self.back[0][0]
+        self.left[0][1] = self.back[0][1]
+        #move r->b
+        self.back[0][0] = self.right[0][0]
+        self.back[0][1] = self.right[0][1]
+        #move f->r
+        self.right[0][0] = temp1
+        self.right[0][1] = temp2
+        
+        #rotate the side
+        temp1 = self.top[0][0]
+        self.top[0][0] = self.top[0][1]
+        self.top[0][1] = self.top[1][1]
+        self.top[1][1] = self.top[1][0]
+        self.top[1][0] = temp1
