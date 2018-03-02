@@ -58,3 +58,36 @@ Class State:
 #          | U00 U01 |
 #          | U10 U11 |
 #          +  -   -  +
+    
+    #below are the 12 possible moves coresponding to the moves in the image https://smhttp-ssl-62406.nexcesscdn.net/resources/images/solve-it/2x2-moves.jpg
+    def rotate_right(self):
+        #rotate the strip
+        temp1 = self.front[0][1]
+        temp2 = self.front[1][1]
+        self.front[0][1] = self.under[0][1]
+        self.front[1][1] = self.under[1][1]
+        self.under[0][1] = self.back[1][0]
+        self.under[1][1] = self.back[0][0]
+        self.back[1][0] = self.top[0][1]
+        self.back[0][0] = self.top[1][1]
+        self.top[0][1] = temp1
+        self.top[1][1] = temp2
+        #rotate the side
+        temp1 = self.right[0][0]
+        self.right[0][0] = self.right[1][0]
+        self.right[1][0] = self.right[1][1]
+        self.right[1][1] = self.right[0][1]
+        self.right[0][1] = temp1
+        
+    def rotate_right_inverse(self):
+        #rotate the strip
+        temp1 = self.front[0][1]
+        temp2 = self.front[1][1]
+        self.front[0][1] = self.top[0][1]
+        self.front[1][1] = self.top[1][1]
+        self.top[0][1] = self.back[1][0]
+        self.top[1][1] = self.back[0][0]
+        self.back[1][0] = self.under[0][1]
+        self.back[0][0] = self.under[1][1]
+        self.under[0][1] = temp1
+        self.under[1][1] = temp2
