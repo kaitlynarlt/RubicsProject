@@ -10,7 +10,7 @@ O = 'O'  # orange
 W = 'W'  # white
 
 
-Class State:
+class State:
     def __init__(self, front, back, left, right, top, under):
         self.front = front
         self.back = back
@@ -176,7 +176,7 @@ Class State:
         self.under[1][0] = self.left[0][0]
         #move t->l
         self.left[1][0] = temp1
-        self.left[0][0] temp2
+        self.left[0][0] = temp2
         
         #rotate the side
         temp1 = self.back[0][0]
@@ -306,7 +306,7 @@ Class State:
         #rotate the side
         temp1 = self.front[0][0]
         self.front[0][0] = self.front[1][0]
-        self.front[1][0] = self.[1][1]
+        self.front[1][0] = self.front[1][1]
         self.front[1][1] = self.front[0][1]
         self.front[0][1] = temp1
         
