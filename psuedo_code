@@ -15,5 +15,20 @@ List of features:
 7:
 '''
 
+Kaitlyn: (Warning: I'm sick as snot and can hardly speak in proper english right now so let me know if you have any questions
+just a few things of note for your code so far:
+-I like the idea of using just the 2 x 2 cube as it simplifies things dramatically
+-one major thing we can do is to treat different colors the same such that if two seperate states have the same patterns just with different colors then we treat them as essentially the same.
+  ie: [ W, B ]  and  [ W, O ]  and  [ B, G ] are all treated the same as they all have the same pattern
+      [ B, R ]       [ O, R ]       [ G, O ]
+  this will reduce the state space to 1/6th of its original size
+-I kind of like where you are going with you list of features above, but, 2 things:
+  -one: look at this page https://how-to-solve-a-rubix-cube.com/white-face/  note that just because a face is all the same color, that doesn't mean that it is any better than before
+  -two: the way your describing it sounds like baroque chess. we aren't able to look at a state and determine it's static value and then decide what move to make based off of that. but this would make for a decent rewards system
+-while it is a good idea to have an individual state to test from starting out, and while we can put a constraint on the innitial state space, I don't think we can constrain it down to a single state.
 
-
+for other general things in our code:
+-is it okay if we stick with four-space indentation in our code so that it is easy to go from one person's code to another person's code without having to change styling
+-we should go ahead and get to work on a class that will difine a general state and a set of moves. (I can go ahead and get started on this)
+-also, here is another site to look at https://www.youcandothecube.com/solve-it/2-x-2-solution
+-also, I probably won't be able to make class tomorrow due to the fact that I am sick, feel free to call or text me as needed
