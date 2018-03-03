@@ -3,12 +3,19 @@ from Cube import COLORS
 
 
 SIDES = []
+Q_VALS = {}
+FEATURES = []
+WEIGHTS = []
+LAST_STATE = None
+LAST_ACTION = None
+GAMMA = 0.5
+STEP = 1  # not really sure what this is for or if its necessary
 
 for color in COLORS:
     side = [[color, color], [color, color]]
     SIDES.append(side)
 
-# Rubics cube state, initialized in goal state
+# Rubiks cube state, initialized in goal state
 CUBE = State(SIDES[0],SIDES[1],SIDES[2],SIDES[3],SIDES[4],SIDES[5])
 
 # list of all posible moves
@@ -28,6 +35,17 @@ OPERATORS.append(lambda: CUBE.rotate_front_inverse())
 OPERATORS.append(lambda: CUBE.rotate_top())
 OPERATORS.append(lambda: CUBE.rotate_top_inverse())
 
+# the way im doing it, we will need a method that updates the FEATURES array to represent the features of the last
+# state and last action after making a move
+
+
+def setup():
+    global Q_VALS, WEIGHTS
+    for op in OPERATORS:
+        Q_VALS[(CUBE, op)] = 0
+
+    for i in range(len(FEATURES)):
+        WEIGHTS[i] = 1
 
 # USAGES
 
@@ -39,3 +57,36 @@ OPERATORS.append(lambda: CUBE.rotate_top_inverse())
 
 # check if the current state is a goal state
 # CUBE.is_goal_state()
+
+
+def update_weights(s_prime, new_action, r):
+    global WEIGHTS
+    # δ= r+γQw(s',a')-Qw(s,a)
+    delta = r + GAMMA * Q_VALS[(s_prime, new_action)] - Q_VALS[(LAST_STATE, LAST_ACTION)]
+    #wi ←wi + ηδFi(s,a)
+    for i in range(len(WEIGHTS)):
+        WEIGHTS[i] = WEIGHTS[i] + STEP * delta * FEATURES[i]  #the features based on (LAST_STATE, LAST_ACTION)
+    update_q_val()
+
+
+def update_q_val():
+    global Q_VALS
+    # Qw(s,a) = w0+w1 F1(s,a) + ...+ wn Fn(s,a)
+    products = []
+    for i in range(len(WEIGHTS)):
+        products.append(WEIGHTS[i] * FEATURES[i])
+    total = 0
+    for elem in products:
+        total += elem
+
+    Q_VALS[(LAST_STATE, LAST_ACTION)] = total
+
+
+def choose_next_action(s_prime, new_action, r):
+    global LAST_ACTION, LAST_STATE
+
+    # choose an action 'new_action' based on new Q values
+    update_weights(s_prime, r)
+
+    LAST_STATE = s_prime
+    # LAST_ACTION = new_action
