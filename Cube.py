@@ -465,3 +465,24 @@ class State:
             if not (side[0][0] == side[0][1] and side[0][1] == side[1][1] and side[1][1] == side[1][0]):
                 return False
         return True
+        
+Class Operator:
+    def __init__(self, name, precond, state_transf):
+        self.name = name
+        self.precond = precond
+        self.state_transf = state_transf
+ 
+    def is_applicable(self, s):
+        return self.precond(s)
+ 
+    def apply(self, s):
+        return self.state_transf(s)
+        
+#ADD THIS PART
+# CREATE_INITIAL_STATE = lambda: State(init)
+actions = ["rotate_front", "rotate_front_inverse", ""]
+OPERATORS = [Operator("rotate front", True, lambda s: s.rotate_front()),
+Operator("rotate front", True, lambda s: s.rotate_front())
+Operator("rotate front", True, lambda s: s.rotate_front())
+Operator("rotate front", True, lambda s: s.rotate_front())
+Operator("rotate front", True, lambda s: s.rotate_front())]
