@@ -68,16 +68,16 @@ def update_weights(s_prime, new_action, r):
     delta = r + GAMMA * Q_VALS[(s_prime, new_action)] - Q_VALS[(LAST_STATE, LAST_ACTION)]
     #wi ←wi + ηδFi(s,a)
     for i in range(len(WEIGHTS)):
-        WEIGHTS[i] = WEIGHTS[i] + STEP * delta * FEATURES[i]  #the features based on (LAST_STATE, LAST_ACTION)
-    update_q_val()
+        WEIGHTS[i] = WEIGHTS[i] + STEP * delta * s_prime.features[i]  #the features based on (LAST_STATE, LAST_ACTION)
+    update_q_val(s_prime)
 
 
-def update_q_val():
+def update_q_val(s_prime):
     global Q_VALS
     # Qw(s,a) = w0+w1 F1(s,a) + ...+ wn Fn(s,a)
     products = []
     for i in range(len(WEIGHTS)):
-        products.append(WEIGHTS[i] * FEATURES[i])
+        products.append(WEIGHTS[i] * s_prime.features[i])
     total = 0
     for elem in products:
         total += elem
@@ -89,7 +89,6 @@ def choose_next_action(s_prime, new_action, r):
     global LAST_ACTION, LAST_STATE
 
     # choose an action 'new_action' based on new Q values
-    update_weights(s_prime, r)
     max_qval = 0
     best_action = rand.sample(ACTIONS[0:12], 1)[0]
     for a in ACTIONS[0:12]:
@@ -97,5 +96,7 @@ def choose_next_action(s_prime, new_action, r):
             max_qval = Q_VALS[s, a]
             best_action = a
     
+    update_weights(s_prime, best_action, r)
+
     LAST_STATE = s_prime
     # LAST_ACTION = new_action
