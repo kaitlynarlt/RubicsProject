@@ -466,6 +466,63 @@ class State:
                 return False
         return True
         
+    def front_solved(self):
+        if self.front[0][0] == self.front[0][1] and 
+        self.front[0][0] == self.front[1][0] and 
+        self.front[0][0] == self.front[1][1]:
+            return 1
+        else:
+            return 0
+            
+    def top_solved(self):
+        if self.top[0][0] == self.top[0][1] and 
+        self.top[0][0] == self.top[1][0] and 
+        self.top[0][0] == self.top[1][1]:
+            return 1
+        else:
+            return 0
+            
+    def left_solved(self):
+        if self.left[0][0] == self.left[0][1] and 
+        self.left[0][0] == self.left[1][0] and 
+        self.left[0][0] == self.left[1][1]:
+            return 1
+        else:
+            return 0
+            
+    def right_solved(self):
+        if self.right[0][0] == self.right[0][1] and 
+        self.right[0][0] == self.right[1][0] and 
+        self.right[0][0] == self.right[1][1]:
+            return 1
+        else:
+            return 0
+            
+    def back_solved(self):
+        if self.back[0][0] == self.back[0][1] and 
+        self.back[0][0] == self.back[1][0] and 
+        self.back[0][0] == self.back[1][1]:
+            return 1
+        else:
+            return 0
+            
+    def under_solved(self):
+        if self.under[0][0] == self.under[0][1] and 
+        self.under[0][0] == self.under[1][0] and 
+        self.under[0][0] == self.under[1][1]:
+            return 1
+        else:
+            return 0
+            
+    def features(self):
+        sum = front_solved(self) + top_solved(self) + back_solved(self) + under_solved(self) + left_solved(self) + right_solved(self)
+        result = []
+        # feat1
+        for i in range(sum):
+            result.append(1)
+        for i in range(6 - sum):
+            result.append(0)
+        
 Class Operator:
     def __init__(self, name, precond, state_transf):
         self.name = name
