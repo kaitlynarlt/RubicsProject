@@ -522,6 +522,7 @@ class State:
             result.append(1)
         for i in range(6 - sum):
             result.append(0)
+        return result
         
 Class Operator:
     def __init__(self, name, precond, state_transf):
