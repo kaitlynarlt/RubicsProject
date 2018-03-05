@@ -1,7 +1,9 @@
 from Cube import State
 from Cube import COLORS
+from Cube import OPERATORS
 
-
+ACTIONS = [op.name for op in OPERATORS]
+ACTIONS.append("Exit")
 SIDES = []
 Q_VALS = {}
 FEATURES = []
@@ -20,21 +22,21 @@ for color in COLORS:
 CUBE = State(SIDES[0],SIDES[1],SIDES[2],SIDES[3],SIDES[4],SIDES[5])
 
 # list of all posible moves
-OPERATORS = []
+# OPERATORS = []
 
 #adding the 12 posible moves to the set of operators
-OPERATORS.append(lambda: CUBE.rotate_right())
-OPERATORS.append(lambda: CUBE.rotate_right_inverse())
-OPERATORS.append(lambda: CUBE.rotate_left())
-OPERATORS.append(lambda: CUBE.rotate_left_inverse())
-OPERATORS.append(lambda: CUBE.rotate_back())
-OPERATORS.append(lambda: CUBE.rotate_back_inverse())
-OPERATORS.append(lambda: CUBE.rotate_under())
-OPERATORS.append(lambda: CUBE.rotate_under_inverse())
-OPERATORS.append(lambda: CUBE.rotate_front())
-OPERATORS.append(lambda: CUBE.rotate_front_inverse())
-OPERATORS.append(lambda: CUBE.rotate_top())
-OPERATORS.append(lambda: CUBE.rotate_top_inverse())
+# OPERATORS.append(lambda: CUBE.rotate_right())
+# OPERATORS.append(lambda: CUBE.rotate_right_inverse())
+# OPERATORS.append(lambda: CUBE.rotate_left())
+# OPERATORS.append(lambda: CUBE.rotate_left_inverse())
+# OPERATORS.append(lambda: CUBE.rotate_back())
+# OPERATORS.append(lambda: CUBE.rotate_back_inverse())
+# OPERATORS.append(lambda: CUBE.rotate_under())
+# OPERATORS.append(lambda: CUBE.rotate_under_inverse())
+# OPERATORS.append(lambda: CUBE.rotate_front())
+# OPERATORS.append(lambda: CUBE.rotate_front_inverse())
+# OPERATORS.append(lambda: CUBE.rotate_top())
+# OPERATORS.append(lambda: CUBE.rotate_top_inverse())
 
 # the way im doing it, we will need a method that updates the FEATURES array to represent the features of the last
 # state and last action after making a move
@@ -89,6 +91,11 @@ def choose_next_action(s_prime, new_action, r):
     # choose an action 'new_action' based on new Q values
     update_weights(s_prime, r)
     max_qval = 0
-    #best_action = rand.sample(ACTIONS())
+    best_action = rand.sample(ACTIONS[0:12], 1)[0]
+    for a in ACTIONS[0:12]:
+        if Q_VALS[s, a] > max_qval:
+            max_qval = Q_VALS[s, a]
+            best_action = a
+    
     LAST_STATE = s_prime
     # LAST_ACTION = new_action
