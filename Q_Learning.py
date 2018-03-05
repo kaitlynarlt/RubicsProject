@@ -10,6 +10,7 @@ LAST_STATE = None
 LAST_ACTION = None
 GAMMA = 0.5
 STEP = 1  # not really sure what this is for or if its necessary
+import random as rand
 
 for color in COLORS:
     side = [[color, color], [color, color]]
@@ -87,6 +88,7 @@ def choose_next_action(s_prime, new_action, r):
 
     # choose an action 'new_action' based on new Q values
     update_weights(s_prime, r)
-
+    max_qval = 0
+    #best_action = rand.sample(ACTIONS())
     LAST_STATE = s_prime
     # LAST_ACTION = new_action
