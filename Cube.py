@@ -480,9 +480,17 @@ Class Operator:
         
 #ADD THIS PART
 # CREATE_INITIAL_STATE = lambda: State(init)
-actions = ["rotate_front", "rotate_front_inverse", ""]
-OPERATORS = [Operator("rotate front", True, lambda s: s.rotate_front()),
-Operator("rotate front", True, lambda s: s.rotate_front())
-Operator("rotate front", True, lambda s: s.rotate_front())
-Operator("rotate front", True, lambda s: s.rotate_front())
-Operator("rotate front", True, lambda s: s.rotate_front())]
+
+OPERATORS = [
+    Operator("rotate front", True, lambda s: s.rotate_front()),
+    Operator("rotate front inverse", True, lambda s: s.rotate_front_inverse()),
+    Operator("rotate under", True, lambda s: s.rotate_under()),
+    Operator("rotate under inverse", True, lambda s: s.rotate_under_inverse()),
+    Operator("rotate back", True, lambda s: s.rotate_back()),
+    Operator("rotate back inverse", True, lambda s: s.rotate_back_inverse()),
+    Operator("rotate left", True, lambda s: s.rotate_left()),
+    Operator("rotate left inverse", True, lambda s: s.rotate_left_inverse()),
+    Operator("rotate right", True, lambda s: s.rotate_right()),
+    Operator("rotate right inverse", True, lambda s: s.rotate_right_inverse()),
+    Operator("rotate top", True, lambda s: s.rotate_top()),
+    Operator("rotate top inverse", True, lambda s: s.rotate_top_inverse())]
