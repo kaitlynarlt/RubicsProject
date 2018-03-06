@@ -99,4 +99,4 @@ def choose_next_action(s_prime, new_action, r):
     update_weights(s_prime, best_action, r)
 
     LAST_STATE = s_prime
-    # LAST_ACTION = new_action
+    LAST_ACTION = best_action

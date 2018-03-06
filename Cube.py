@@ -1,5 +1,5 @@
 #this is meant to be just a general template for a state and the set of moves
-#for the rubics cube. Changes may be made as neccessary
+#for the rubiks cube. Changes may be made as necessary
 
 #colors
 R = 'R'  # red
@@ -37,8 +37,9 @@ class State:
 
     def __eq__(self, other):
         global COLORS
-        colors = list(COLORS)
-        
+        # colors = list(COLORS)
+        selfRep = []
+        otherRep = []
         #front
         selfRep.append(self.front[0][0])
         otherRep.append(other.front[0][0])
@@ -414,7 +415,7 @@ class State:
         self.back[0][0] = self.left[0][0]
         self.back[0][1] = self.left[0][1]
         #move f->l
-        self.left[0][0] = tmep1
+        self.left[0][0] = temp1
         self.left[0][1] = temp2
         
         #rotate the side
@@ -467,64 +468,64 @@ class State:
         return True
         
     def front_solved(self):
-        if self.front[0][0] == self.front[0][1] and 
-        self.front[0][0] == self.front[1][0] and 
+        if self.front[0][0] == self.front[0][1] and \
+        self.front[0][0] == self.front[1][0] and \
         self.front[0][0] == self.front[1][1]:
             return 1
         else:
             return 0
             
     def top_solved(self):
-        if self.top[0][0] == self.top[0][1] and 
-        self.top[0][0] == self.top[1][0] and 
+        if self.top[0][0] == self.top[0][1] and \
+        self.top[0][0] == self.top[1][0] and \
         self.top[0][0] == self.top[1][1]:
             return 1
         else:
             return 0
             
     def left_solved(self):
-        if self.left[0][0] == self.left[0][1] and 
-        self.left[0][0] == self.left[1][0] and 
+        if self.left[0][0] == self.left[0][1] and \
+        self.left[0][0] == self.left[1][0] and \
         self.left[0][0] == self.left[1][1]:
             return 1
         else:
             return 0
             
     def right_solved(self):
-        if self.right[0][0] == self.right[0][1] and 
-        self.right[0][0] == self.right[1][0] and 
+        if self.right[0][0] == self.right[0][1] and \
+        self.right[0][0] == self.right[1][0] and \
         self.right[0][0] == self.right[1][1]:
             return 1
         else:
             return 0
             
     def back_solved(self):
-        if self.back[0][0] == self.back[0][1] and 
-        self.back[0][0] == self.back[1][0] and 
+        if self.back[0][0] == self.back[0][1] and \
+        self.back[0][0] == self.back[1][0] and \
         self.back[0][0] == self.back[1][1]:
             return 1
         else:
             return 0
             
     def under_solved(self):
-        if self.under[0][0] == self.under[0][1] and 
-        self.under[0][0] == self.under[1][0] and 
+        if self.under[0][0] == self.under[0][1] and \
+        self.under[0][0] == self.under[1][0] and \
         self.under[0][0] == self.under[1][1]:
             return 1
         else:
             return 0
             
     def features(self):
-        sum = front_solved(self) + top_solved(self) + back_solved(self) + under_solved(self) + left_solved(self) + right_solved(self)
+        summation = self.front_solved() + self.top_solved() + self.back_solved() + self.under_solved() + self.left_solved() + self.right_solved()
         result = []
         # feat1
-        for i in range(sum):
+        for i in range(summation):
             result.append(1)
-        for i in range(6 - sum):
+        for i in range(6 - summation):
             result.append(0)
         return result
         
-Class Operator:
+class Operator:
     def __init__(self, name, precond, state_transf):
         self.name = name
         self.precond = precond
