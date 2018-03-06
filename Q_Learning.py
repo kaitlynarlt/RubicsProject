@@ -85,15 +85,15 @@ def update_q_val(s_prime):
     Q_VALS[(LAST_STATE, LAST_ACTION)] = total
 
 
-def choose_next_action(s_prime, new_action, r):
+def choose_next_action(s_prime, r):
     global LAST_ACTION, LAST_STATE
 
     # choose an action 'new_action' based on new Q values
     max_qval = 0
     best_action = rand.sample(ACTIONS[0:12], 1)[0]
     for a in ACTIONS[0:12]:
-        if Q_VALS[s, a] > max_qval:
-            max_qval = Q_VALS[s, a]
+        if Q_VALS[s_prime, a] > max_qval:
+            max_qval = Q_VALS[s_prime, a]
             best_action = a
     
     update_weights(s_prime, best_action, r)
