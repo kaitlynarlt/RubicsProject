@@ -515,16 +515,100 @@ class State:
         else:
             return 0
             
+    def side_is_solved(self, side): # where side is the array representing that side
+        return (side[0][0] == side[0][1] and side[0][0] == side[1][0] and side[0][0] == side[1][1])
+        
     def features(self):
-        summation = self.front_solved() + self.top_solved() + self.back_solved() + self.under_solved() + self.left_solved() + self.right_solved()
+#        summation = self.front_solved() + self.top_solved() + self.back_solved() + self.under_solved() + self.left_solved() + self.right_solved()
+#        result = []
+#        # feat1
+#        for i in range(summation):
+#            result.append(1)
+#        for i in range(6 - summation):
+#            result.append(0)
+
+        # I just cleaned things up a bit but feel free to change it back to how
+        # you had it if I missed something
+        # also I used True and False as opposed to 1 and 0 as booleans tend to
+        # use less memory than ints
         result = []
-        # feat1
-        for i in range(summation):
-            result.append(1)
-        for i in range(6 - summation):
-            result.append(0)
+        count = 0
+        for side in [self.front , self.back, self.left, self.right, self.top, self.under]:
+            if self.side_is_solved(side):
+                result.append(True)
+            else:
+                result.append(False)
+        
         return result
         
+        
+
+    # alternatively we could check for solved sides if you want. 
+    # there would be 4096 posible keys as opposed to 64 when checking for solved sides.
+    #
+    # if we combined the two we could get 262,144 keys
+    # while this is a lot it is still very small relative to the total number of
+    # states for the 2x2 (3,674,160) and could still be considered feature based.
+    # it could also be easily aplied to the 3x3 (which has 43,252,003,274,489,856,000 states)
+    # without increasing the size of the key set and without any changes to the 
+    # how we check features
+    
+    
+    # this function checks all 12 sides to see if they are solved and returns an
+    # array similar to the one you used for the features
+    def get_num_of_solved_adj(self):
+        #checks all 12 sides
+        result = []
+        if self.front[0][0] == self.front[0][1] and self.top[1][0] == self.top[1][1]:
+            result.append(True)
+        else: result.append(False)
+        
+        if self.front[0][0] == self.front[1][0] and self.left[0][1] == self.left[1][1]:
+            result.append(True)
+        else: result.append(False)
+        
+        if self.front[1][0] == self.front[1][1] and self.under[0][0] == self.under[0][1]:
+            result.append(True)
+        else: result.append(False)
+        
+        if self.front[0][1] == self.front[1][1] and self.right[0][0] == self.right[1][0]:
+            result.append(True)
+        else: result.append(False)
+        
+        if self.right[0][0] == self.right[0][1] and self.top[1][1] == self.top[0][1]:
+            result.append(True)
+        else: result.append(False)
+        
+        if self.right[0][1] == self.right[1][1] and self.back[0][0] == self.back[1][0]:
+            result.append(True)
+        else: result.append(False)
+        
+        if self.right[1][0] == self.right[1][1] and self.under[0][1] == self.under[1][1]:
+            result.append(True)
+        else: result.append(False)
+        
+        if self.left[0][0] ==  self.left[0][1] and self.top[0][0] == self.top[1][0]:
+            result.append(True)
+        else: result.append(False)
+        
+        if self.left[0][0] == self.left[1][0] and self.back[0][1] == self.back[1][1]:
+            result.append(True)
+        else: result.append(False)
+        
+        if self.left[1][0] == self.left[1][1] and self.under[0][0] == self.under[1][0]:
+            result.append(True)
+        else: result.append(False)
+        
+        if self.under[1][0] == self.under[1][1] and self.back[1][0] == self.back[1][1]:
+            result.append(True)
+        else: result.append(False)
+        
+        if self.top[0][0] == self.top[0][1] and self.back[0][0] == self.back[0][1]:
+            result.append(True)
+        else: result.append(False)
+        
+        return result
+
 class Operator:
     def __init__(self, name, precond, state_transf):
         self.name = name
@@ -553,3 +637,4 @@ OPERATORS = [
     Operator("rotate right inverse", True, lambda s: s.rotate_right_inverse()),
     Operator("rotate top", True, lambda s: s.rotate_top()),
     Operator("rotate top inverse", True, lambda s: s.rotate_top_inverse())]
+    
