@@ -21,6 +21,8 @@ for color in COLORS:
 # Rubiks cube state, initialized in goal state
 CUBE = State(SIDES[0],SIDES[1],SIDES[2],SIDES[3],SIDES[4],SIDES[5])
 
+# test
+
 # list of all posible moves
 # OPERATORS = []
 
