@@ -16,12 +16,12 @@ NOT_COLORS = [1, 2, 3, 4, 5, 6]
 class State:
     def __init__(self):
         global R, B, G, Y, O, W
-        self.front = [["F00", "F01"],["F10", "F11"]]
-        self.back = [["B00", "B01"], ["B10", "B11"]]
-        self.left = [["L00", "L01"], ["L10", "L11"]]
-        self.right = [["R00", "R01"], ["R10", "R11"]]
-        self.top = [["T00", "T01"], ["T10", "T11"]]
-        self.under = [["U00", "U01"], ["U10", "U11"]]
+        self.front = [[R, R], [R, R]]
+        self.back = [[B, B], [B, B]]
+        self.left = [[G, G], [G, G]]
+        self.right = [[Y, Y], [Y, Y]]
+        self.top = [[O, O], [O, O]]
+        self.under = [[W, W], [W, W]]
 
     def __str__(self):
         toReturn = ''
@@ -643,14 +643,7 @@ class State:
 
     def features(self):
         
-        result = []
-        
-        for side in [self.front, self.back, self.left, self.right, self.top, self.under]:
-            if side_is_solved(side):
-                result.append(1)
-            else:
-                result.append(0)
-                
+        result = self.get_num_of_solved_sides()
         result.extend(self.get_num_of_solved_adj())
         return result
 
@@ -732,7 +725,17 @@ class State:
 
         return result
 
-
+    def get_num_of_solved_sides(self):
+        result = []
+        
+        for side in [self.front, self.back, self.left, self.right, self.top, self.under]:
+            if side_is_solved(side):
+                result.append(1)
+            else:
+                result.append(0)
+        
+        return result
+    
 def side_is_solved(side):  # where side is the array representing that side
     return side[0][0] == side[0][1] and side[0][0] == side[1][0] and side[0][0] == side[1][1]
 
@@ -742,6 +745,9 @@ class Operator:
         self.name = name
         self.precond = precond
         self.state_transf = state_transf
+
+    def __str__(self):
+        return self.name
 
     def is_applicable(self, s):
         return self.precond(s)
