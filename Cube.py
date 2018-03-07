@@ -155,7 +155,8 @@ class State:
     #          | U10 U11 |
     #          +  -   -  +
 
-    # below are the 12 possible moves coresponding to the moves in the image https://smhttp-ssl-62406.nexcesscdn.net/resources/images/solve-it/2x2-moves.jpg
+    # below are the 12 possible moves coresponding to the moves in the image
+    # https://smhttp-ssl-62406.nexcesscdn.net/resources/images/solve-it/2x2-moves.jpg
     def rotate_right(self):  # 'R' in image
         # rotate the strip
         # save f
