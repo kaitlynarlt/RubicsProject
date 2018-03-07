@@ -457,6 +457,172 @@ class State:
         self.top[1][1] = self.top[1][0]
         self.top[1][0] = temp1
 
+    def rotate_right_180(self):  # 'R' in image
+        temp1 = self.front[0][1]
+        temp2 = self.front[1][1]
+        
+        self.front[0][1] = self.back[1][0]
+        self.front[1][1] = self.back[0][0]
+        
+        self.back[1][0] = temp1
+        self.back[0][0] = temp2
+        
+        temp1 = self.top[0][1]
+        temp2 = self.top[1][1]
+        
+        self.top[0][1] = self.under[0][1]
+        self.top[1][1] = self.under[1][1]
+        
+        self.under[0][1] = temp1
+        self.under[1][1] = temp2
+        
+        temp1 = self.right[0][0]
+        self.right[0][0] = self.right[1][1]
+        self.right[1][1] = temp1
+        
+        temp1 = self.right[0][1]
+        self.right[0][1] = self.right[1][0]
+        self.right[1][0] = temp1
+
+    def rotate_left_180(self):
+        
+        temp1 = self.front[0][0]
+        temp2 = self.front[1][0]
+        
+        self.front[0][0] = self.back[1][1]
+        self.front[1][0] = self.back[0][1]
+        
+        self.back[1][1] = temp1
+        self.back[0][1] = temp2
+        
+        temp1 = self.top[0][0]
+        temp2 = self.top[1][0]
+        
+        self.top[0][0] = self.under[0][0]
+        self.top[1][0] = self.under[1][0]
+        
+        self.under[0][0] = temp1
+        self.under[1][0] = temp2
+        
+        temp1 = self.left[0][0]
+        self.left[0][0] = self.left[1][1]
+        self.left[1][1] = temp1
+        
+        temp1 = self.left[0][1]
+        self.left[0][1] = self.left[1][0]
+        self.left[1][0] = temp1
+
+    def rotate_back_180(self):
+        
+        temp1 = self.top[0][0]
+        temp2 = self.top[0][1]
+        
+        self.top[0][0] = self.under[1][1]
+        self.top[0][1] = self.under[1][0]
+        
+        self.under[1][1] = temp1
+        self.under[1][0] = temp2
+        
+        temp1 = self.left[0][0]
+        temp2 = self.left[1][0]
+        
+        self.left[0][0] = self.right[1][1]
+        self.left[1][0] = self.right[0][1]
+        
+        self.right[1][1] = temp1
+        self.right[0][1] = temp2
+        
+        temp1 = self.back[0][0]
+        self.back[0][0] = self.back[1][1]
+        self.back[1][1] = temp1
+        
+        temp1 = self.back[0][1]
+        self.back[0][1] = self.back[1][0]
+        self.back[1][0] = temp1
+
+    def rotate_under_180(self):
+        
+        temp1 = self.front[1][0]
+        temp2 = self.front[1][1]
+        
+        self.front[1][0] = self.back[1][0]
+        self.front[1][1] = self.back[1][1]
+        
+        self.back[1][0] = temp1
+        self.back[1][1] = temp2
+        
+        temp1 = self.left[1][0]
+        temp2 = self.left[1][1]
+        
+        self.left[1][0] = self.right[1][0]
+        self.left[1][1] = self.right[1][1]
+        
+        self.right[1][0] = temp1
+        self.right[1][1] = temp2
+        
+        temp1 = self.under[0][0]
+        self.under[0][0] = self.under[1][1]
+        self.under[1][1] = temp1
+        
+        temp1 = self.under[0][1]
+        self.under[0][1] = self.under[1][0]
+        self.under[1][0] = temp1
+
+    def rotate_front_180(self):
+        temp1 = self.top[1][0]
+        temp2 = self.top[1][1]
+        
+        self.top[1][0] = self.under[0][1]
+        self.top[1][1] = self.under[0][0]
+        
+        self.under[0][1] = temp1
+        self.under[0][0] = temp2
+        
+        temp1 = self.left[0][1]
+        temp2 = self.left[1][1]
+        
+        self.left[0][1] = self.right[1][0]
+        self.left[1][1] = self.right[0][0]
+        
+        self.right[1][0] = temp1
+        self.right[0][0] = temp2
+        
+        temp1 = self.front[0][0]
+        self.front[0][0] = self.front[1][1]
+        self.front[1][1] = temp1
+        
+        temp1 = self.front[0][1]
+        self.front[0][1] = self.front[1][0]
+        self.front[1][0] = temp1
+
+    def rotate_top_180(self):
+        
+        temp1 = self.front[0][0]
+        temp2 = self.front[0][1]
+        
+        self.front[0][0] = self.back[0][0]
+        self.front[0][1] = self.back[0][1]
+        
+        self.back[0][0] = temp1
+        self.back[0][1] = temp2
+        
+        temp1 = self.left[0][0]
+        temp2 = self.left[0][1]
+        
+        self.left[0][0] = self.right[0][0]
+        self.left[0][1] = self.right[0][1]
+        
+        self.right[0][0] = temp1
+        self.right[0][1] = temp2
+        
+        temp1 = self.top[0][0]
+        self.top[0][0] = self.top[1][1]
+        self.top[1][1] = temp1
+        
+        temp1 = self.top[0][1]
+        self.top[0][1] = self.top[1][0]
+        self.top[1][0] = temp1
+
     def is_goal_state(self):
         global COLORS
         colors = list(COLORS)
