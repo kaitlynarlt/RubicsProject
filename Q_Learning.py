@@ -5,39 +5,31 @@ import random as rand
 
 ACTIONS = None
 Q_VALS = {}
-CUBE
+CUBE = STATE()
+MOVES_TAKEN_TO_MIX_UP_CUBE = 10
+WEIGHTS = []
+STEP = 1      # not really sure what this is for or if its necessary     #STEP is for keeping track of the number of moves you have made
+GAMMA = 0.5
+ALPHA = 0.5
+LAST_STATE = None
+LAST_ACTION = None
+ACTIONS = []
 
 def setup():
-    global Q_VALS, CUBE, LAST_ACTION, LAST_STATE, GAMMA, STEP, ACTIONS
+    global Q_VALS, CUBE, LAST_ACTION, LAST_STATE, GAMMA, STEP, ACTIONS, OPERATORS
     # global WEIGHTS
     ACTIONS = [op for op in OPERATORS]
     ACTIONS.append("Exit")
-    SIDES = []
-    Q_VALS = {}
-    FEATURES = []
-    WEIGHTS = []
-    LAST_STATE = None
-    LAST_ACTION = None
-    GAMMA = 0.5
-    STEP = 1  # not really sure what this is for or if its necessary
-    #STEP is for keeping track of the number of moves you have made
 
-    for color in COLORS:
-        side = [[color, color], [color, color]]
-        SIDES.append(side)
-
-    # Rubiks cube state, initialized in goal state
-
-    CUBE = State(SIDES[0], SIDES[1], SIDES[2], SIDES[3], SIDES[4], SIDES[5])
-
-    for i in range(10): #mix up the cube
+    for i in range(MOVES_TAKEN_TO_MIX_UP_CUBE): #mix up the cube
         action = rand.sample(ACTIONS[0:12], 1)[0]
         CUBE = action.apply(INIT)
 
+    features = CUBE.features()
     for op in OPERATORS:
-        Q_VALS[(INIT, op)] = 0
+        Q_VALS[(features, op)] = 0
 
-    for i in range(len(FEATURES)):
+    for i in range(len(CUBE.features())):
         WEIGHTS[i] = 1
 
 
