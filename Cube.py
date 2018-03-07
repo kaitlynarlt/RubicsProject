@@ -14,13 +14,14 @@ NOT_COLORS = [1, 2, 3, 4, 5, 6]
 
 
 class State:
-    def __init__(self, front, back, left, right, top, under):
-        self.front = front
-        self.back = back
-        self.left = left
-        self.right = right
-        self.top = top
-        self.under = under
+    def __init__(self):
+        global R, B, G, Y, O, W
+        self.front = [["F00", "F01"],["F10", "F11"]]
+        self.back = [["B00", "B01"], ["B10", "B11"]]
+        self.left = [["L00", "L01"], ["L10", "L11"]]
+        self.right = [["R00", "R01"], ["R10", "R11"]]
+        self.top = [["T00", "T01"], ["T10", "T11"]]
+        self.under = [["U00", "U01"], ["U10", "U11"]]
 
     def __str__(self):
         toReturn = ''
@@ -144,16 +145,16 @@ class State:
     #          + - - +
     #
     # slightly deformed but with indicies for the faces
-    #          +  -   -  +
-    #          | T00 T01 |
-    #          | T10 T11 |
+    #           +  -   -  +
+    #           | T00 T01 |
+    #           | T10 T11 |
     # +  -   -  +  -   -  +  -   -  +  -   -  +
     # | L00 L01 | F00 F01 | R00 R01 | B00 B01 |
     # | L10 L11 | F10 F11 | R10 R11 | B10 B11 |
     # +  -   -  +  -   -  +  -   -  +  -   -  +
-    #          | U00 U01 |
-    #          | U10 U11 |
-    #          +  -   -  +
+    #           | U00 U01 |
+    #           | U10 U11 |
+    #           +  -   -  +
 
     # below are the 12 possible moves coresponding to the moves in the image
     # https://smhttp-ssl-62406.nexcesscdn.net/resources/images/solve-it/2x2-moves.jpg
@@ -181,6 +182,33 @@ class State:
         self.right[1][0] = self.right[1][1]
         self.right[1][1] = self.right[0][1]
         self.right[0][1] = temp1
+
+    def rotate_right_180(self):  # 'R' in image
+        temp1 = self.front[0][1]
+        temp2 = self.front[1][1]
+        
+        self.front[0][1] = self.back[1][0]
+        self.front[1][1] = self.back[0][0]
+        
+        self.back[1][0] = temp1
+        self.back[0][0] = temp2
+        
+        temp1 = self.top[0][1]
+        temp2 = self.top[1][1]
+        
+        self.top[0][1] = self.under[0][1]
+        self.top[1][1] = self.under[1][1]
+        
+        self.under[0][1] = temp1
+        self.under[1][1] = temp2
+        
+        temp1 = self.right[0][0]
+        self.right[0][0] = self.right[1][1]
+        self.right[1][1] = temp1
+        
+        temp1 = self.right[0][1]
+        self.right[0][1] = self.right[1][0]
+        self.right[1][0] = temp1
 
     def rotate_right_inverse(self):  # 'Ri' in image
         # rotate the strip
@@ -232,6 +260,34 @@ class State:
         self.left[1][1] = self.left[0][1]
         self.left[0][1] = temp1
 
+    def rotate_left_180(self):
+        
+        temp1 = self.front[0][0]
+        temp2 = self.front[1][0]
+        
+        self.front[0][0] = self.back[1][1]
+        self.front[1][0] = self.back[0][1]
+        
+        self.back[1][1] = temp1
+        self.back[0][1] = temp2
+        
+        temp1 = self.top[0][0]
+        temp2 = self.top[1][0]
+        
+        self.top[0][0] = self.under[0][0]
+        self.top[1][0] = self.under[1][0]
+        
+        self.under[0][0] = temp1
+        self.under[1][0] = temp2
+        
+        temp1 = self.left[0][0]
+        self.left[0][0] = self.left[1][1]
+        self.left[1][1] = temp1
+        
+        temp1 = self.left[0][1]
+        self.left[0][1] = self.left[1][0]
+        self.left[1][0] = temp1
+
     def rotate_left_inverse(self):  # 'Li' in image
         # rotate the strip
         # save f
@@ -281,6 +337,34 @@ class State:
         self.back[1][0] = self.back[1][1]
         self.back[1][1] = self.back[0][1]
         self.back[0][1] = temp1
+
+    def rotate_back_180(self):
+        
+        temp1 = self.top[0][0]
+        temp2 = self.top[0][1]
+        
+        self.top[0][0] = self.under[1][1]
+        self.top[0][1] = self.under[1][0]
+        
+        self.under[1][1] = temp1
+        self.under[1][0] = temp2
+        
+        temp1 = self.left[0][0]
+        temp2 = self.left[1][0]
+        
+        self.left[0][0] = self.right[1][1]
+        self.left[1][0] = self.right[0][1]
+        
+        self.right[1][1] = temp1
+        self.right[0][1] = temp2
+        
+        temp1 = self.back[0][0]
+        self.back[0][0] = self.back[1][1]
+        self.back[1][1] = temp1
+        
+        temp1 = self.back[0][1]
+        self.back[0][1] = self.back[1][0]
+        self.back[1][0] = temp1
 
     def rotate_back_inverse(self):  # 'Bi' in image
         # rotate the strip
@@ -332,6 +416,34 @@ class State:
         self.under[1][1] = self.under[0][1]
         self.under[0][1] = temp1
 
+    def rotate_under_180(self):
+        
+        temp1 = self.front[1][0]
+        temp2 = self.front[1][1]
+        
+        self.front[1][0] = self.back[1][0]
+        self.front[1][1] = self.back[1][1]
+        
+        self.back[1][0] = temp1
+        self.back[1][1] = temp2
+        
+        temp1 = self.left[1][0]
+        temp2 = self.left[1][1]
+        
+        self.left[1][0] = self.right[1][0]
+        self.left[1][1] = self.right[1][1]
+        
+        self.right[1][0] = temp1
+        self.right[1][1] = temp2
+        
+        temp1 = self.under[0][0]
+        self.under[0][0] = self.under[1][1]
+        self.under[1][1] = temp1
+        
+        temp1 = self.under[0][1]
+        self.under[0][1] = self.under[1][0]
+        self.under[1][0] = temp1
+
     def rotate_under_inverse(self):  # 'Di' in image
         # rotate the strip
         # save f
@@ -381,6 +493,33 @@ class State:
         self.front[1][0] = self.front[1][1]
         self.front[1][1] = self.front[0][1]
         self.front[0][1] = temp1
+
+    def rotate_front_180(self):
+        temp1 = self.top[1][0]
+        temp2 = self.top[1][1]
+        
+        self.top[1][0] = self.under[0][1]
+        self.top[1][1] = self.under[0][0]
+        
+        self.under[0][1] = temp1
+        self.under[0][0] = temp2
+        
+        temp1 = self.left[0][1]
+        temp2 = self.left[1][1]
+        
+        self.left[0][1] = self.right[1][0]
+        self.left[1][1] = self.right[0][0]
+        
+        self.right[1][0] = temp1
+        self.right[0][0] = temp2
+        
+        temp1 = self.front[0][0]
+        self.front[0][0] = self.front[1][1]
+        self.front[1][1] = temp1
+        
+        temp1 = self.front[0][1]
+        self.front[0][1] = self.front[1][0]
+        self.front[1][0] = temp1
 
     def rotate_front_inverse(self):  # 'Fi' in image
         # rotate the strip
@@ -432,169 +571,6 @@ class State:
         self.top[1][1] = self.top[0][1]
         self.top[0][1] = temp1
 
-    def rotate_top_inverse(self):  # 'Ui' in image
-        # rotate the strip
-        # save f
-        temp1 = self.front[0][0]
-        temp2 = self.front[0][1]
-        # move l->f
-        self.front[0][0] = self.left[0][0]
-        self.front[0][1] = self.left[0][1]
-        # move b->l
-        self.left[0][0] = self.back[0][0]
-        self.left[0][1] = self.back[0][1]
-        # move r->b
-        self.back[0][0] = self.right[0][0]
-        self.back[0][1] = self.right[0][1]
-        # move f->r
-        self.right[0][0] = temp1
-        self.right[0][1] = temp2
-
-        # rotate the side
-        temp1 = self.top[0][0]
-        self.top[0][0] = self.top[0][1]
-        self.top[0][1] = self.top[1][1]
-        self.top[1][1] = self.top[1][0]
-        self.top[1][0] = temp1
-
-    def rotate_right_180(self):  # 'R' in image
-        temp1 = self.front[0][1]
-        temp2 = self.front[1][1]
-        
-        self.front[0][1] = self.back[1][0]
-        self.front[1][1] = self.back[0][0]
-        
-        self.back[1][0] = temp1
-        self.back[0][0] = temp2
-        
-        temp1 = self.top[0][1]
-        temp2 = self.top[1][1]
-        
-        self.top[0][1] = self.under[0][1]
-        self.top[1][1] = self.under[1][1]
-        
-        self.under[0][1] = temp1
-        self.under[1][1] = temp2
-        
-        temp1 = self.right[0][0]
-        self.right[0][0] = self.right[1][1]
-        self.right[1][1] = temp1
-        
-        temp1 = self.right[0][1]
-        self.right[0][1] = self.right[1][0]
-        self.right[1][0] = temp1
-
-    def rotate_left_180(self):
-        
-        temp1 = self.front[0][0]
-        temp2 = self.front[1][0]
-        
-        self.front[0][0] = self.back[1][1]
-        self.front[1][0] = self.back[0][1]
-        
-        self.back[1][1] = temp1
-        self.back[0][1] = temp2
-        
-        temp1 = self.top[0][0]
-        temp2 = self.top[1][0]
-        
-        self.top[0][0] = self.under[0][0]
-        self.top[1][0] = self.under[1][0]
-        
-        self.under[0][0] = temp1
-        self.under[1][0] = temp2
-        
-        temp1 = self.left[0][0]
-        self.left[0][0] = self.left[1][1]
-        self.left[1][1] = temp1
-        
-        temp1 = self.left[0][1]
-        self.left[0][1] = self.left[1][0]
-        self.left[1][0] = temp1
-
-    def rotate_back_180(self):
-        
-        temp1 = self.top[0][0]
-        temp2 = self.top[0][1]
-        
-        self.top[0][0] = self.under[1][1]
-        self.top[0][1] = self.under[1][0]
-        
-        self.under[1][1] = temp1
-        self.under[1][0] = temp2
-        
-        temp1 = self.left[0][0]
-        temp2 = self.left[1][0]
-        
-        self.left[0][0] = self.right[1][1]
-        self.left[1][0] = self.right[0][1]
-        
-        self.right[1][1] = temp1
-        self.right[0][1] = temp2
-        
-        temp1 = self.back[0][0]
-        self.back[0][0] = self.back[1][1]
-        self.back[1][1] = temp1
-        
-        temp1 = self.back[0][1]
-        self.back[0][1] = self.back[1][0]
-        self.back[1][0] = temp1
-
-    def rotate_under_180(self):
-        
-        temp1 = self.front[1][0]
-        temp2 = self.front[1][1]
-        
-        self.front[1][0] = self.back[1][0]
-        self.front[1][1] = self.back[1][1]
-        
-        self.back[1][0] = temp1
-        self.back[1][1] = temp2
-        
-        temp1 = self.left[1][0]
-        temp2 = self.left[1][1]
-        
-        self.left[1][0] = self.right[1][0]
-        self.left[1][1] = self.right[1][1]
-        
-        self.right[1][0] = temp1
-        self.right[1][1] = temp2
-        
-        temp1 = self.under[0][0]
-        self.under[0][0] = self.under[1][1]
-        self.under[1][1] = temp1
-        
-        temp1 = self.under[0][1]
-        self.under[0][1] = self.under[1][0]
-        self.under[1][0] = temp1
-
-    def rotate_front_180(self):
-        temp1 = self.top[1][0]
-        temp2 = self.top[1][1]
-        
-        self.top[1][0] = self.under[0][1]
-        self.top[1][1] = self.under[0][0]
-        
-        self.under[0][1] = temp1
-        self.under[0][0] = temp2
-        
-        temp1 = self.left[0][1]
-        temp2 = self.left[1][1]
-        
-        self.left[0][1] = self.right[1][0]
-        self.left[1][1] = self.right[0][0]
-        
-        self.right[1][0] = temp1
-        self.right[0][0] = temp2
-        
-        temp1 = self.front[0][0]
-        self.front[0][0] = self.front[1][1]
-        self.front[1][1] = temp1
-        
-        temp1 = self.front[0][1]
-        self.front[0][1] = self.front[1][0]
-        self.front[1][0] = temp1
-
     def rotate_top_180(self):
         
         temp1 = self.front[0][0]
@@ -623,6 +599,31 @@ class State:
         self.top[0][1] = self.top[1][0]
         self.top[1][0] = temp1
 
+    def rotate_top_inverse(self):  # 'Ui' in image
+        # rotate the strip
+        # save f
+        temp1 = self.front[0][0]
+        temp2 = self.front[0][1]
+        # move l->f
+        self.front[0][0] = self.left[0][0]
+        self.front[0][1] = self.left[0][1]
+        # move b->l
+        self.left[0][0] = self.back[0][0]
+        self.left[0][1] = self.back[0][1]
+        # move r->b
+        self.back[0][0] = self.right[0][0]
+        self.back[0][1] = self.right[0][1]
+        # move f->r
+        self.right[0][0] = temp1
+        self.right[0][1] = temp2
+
+        # rotate the side
+        temp1 = self.top[0][0]
+        self.top[0][0] = self.top[0][1]
+        self.top[0][1] = self.top[1][1]
+        self.top[1][1] = self.top[1][0]
+        self.top[1][0] = temp1
+
     def is_goal_state(self):
         global COLORS
         colors = list(COLORS)
@@ -641,17 +642,17 @@ class State:
         return True
 
     def features(self):
+        
         result = []
-        count = 0
+        
         for side in [self.front, self.back, self.left, self.right, self.top, self.under]:
             if side_is_solved(side):
-                count += 1
-        for i in range(count):
-            result.append(1)
-        for i in range(6 - count):
-            result.append(0)
-
-        return result + self.get_num_of_solved_adj()
+                result.append(1)
+            else:
+                result.append(0)
+                
+        result.extend(self.get_num_of_solved_adj())
+        return result
 
     # alternatively we could check for solved edges if you want.
     # there would be 4096 posible keys as opposed to 64 when checking for solved sides.
