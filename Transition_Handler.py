@@ -31,7 +31,7 @@ Q_VALUES[(INNITIAL_STATE_STRING, ACTIONS[len(ACTIONS)-1])] = 100.0 # sets the go
 # that will trace back over the path traversed from the start to goal and update
 # the q values accordingly with alpha and gamma.
 # The algorithm/implementation is fairly similar to feeding back on a neural net
-USE_FEEDBACK = False # set to true if you want to use the feedback function
+USE_FEEDBACK = True # set to true if you want to use the feedback function
 PATH = [] # path traversed from goal to start (in that order)
 
 
