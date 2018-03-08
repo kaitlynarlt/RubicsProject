@@ -1,3 +1,9 @@
+# I'm not going to comment this any more than I have. This is mainly just 
+# frilly pretty stuff that has very little to do with the Q learning, a bit like
+# the starter code for asignment 5
+# the ui design is similar to the user interface for Towers of Hanoi in asignments
+# 2 and 3
+
 
 from Cube import State
 from Cube import Operator
@@ -9,7 +15,6 @@ from Transition_Handler import ALPHA
 from Transition_Handler import EPSILON
 from Transition_Handler import Q_VALUES
 from random import randint
-#from Transition_Handler import HashableList
 
 STATE = State()
 
