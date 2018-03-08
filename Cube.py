@@ -156,8 +156,10 @@ class State:
     #           | U10 U11 |
     #           +  -   -  +
 
+
     # below are the 12 possible moves coresponding to the moves in the image
     # https://smhttp-ssl-62406.nexcesscdn.net/resources/images/solve-it/2x2-moves.jpg
+    # there are also 6 moves marked as 180 degree turns for their 90 degree counterparts
     
 
     def rotate_right_180(self):  # 'R' in image
@@ -631,6 +633,10 @@ class State:
         self.top[1][0] = temp1
 
 
+    # checks to see if the cube is solved
+    # note: we check only by checking that every side is a single color
+    # so the cube could be rotated from its orriginal state but still be 
+    # considered a goal state
     def is_goal_state(self):
         global COLORS
         colors = list(COLORS)
@@ -648,12 +654,18 @@ class State:
                 return False
         return True
 
+    # gets the feature array for the current state
+    # in the array 1 represents that the feature is present and 0 represents that
+    # the feature is not present
     def features(self):
         
         result = self.get_num_of_solved_sides()
         result.extend(self.get_num_of_solved_adj())
         return result
 
+    # gets the feature array corresponding to the edges
+    # in the array 1 represents that the edge is solved and 0 represents the
+    # edge not being solved
     def get_num_of_solved_adj(self):
         # checks all 12 edges
         result = []
@@ -719,6 +731,12 @@ class State:
 
         return result
 
+    # gets the feature array coresponding to the sides
+    # in the array 1 represents that the side is solved and 0 represents the side
+    # not being solved
+    # note: when we say that a side is solved we are only checking that the colors
+    # for all the cubies on that side are the same and are not checking that the
+    # surrounding edge is also solved
     def get_num_of_solved_sides(self):
         result = []
         
@@ -729,48 +747,53 @@ class State:
                 result.append(0)
         
         return result
-    
+
+# a generic checker to see if a side is solved
+# does not check that the edges around that side are solved
 def side_is_solved(side):  # where side is the array representing that side
     return side[0][0] == side[0][1] and side[0][0] == side[1][0] and side[0][0] == side[1][1]
 
 
+# Operator class modeled off of the operator class from Towers of Hanoi
+# every action is posible from every state so there is no need for a precondition
+# check
 class Operator:
-    def __init__(self, name, precond, state_transf):
+    def __init__(self, name, state_transf):
         self.name = name
-        self.precond = precond
         self.state_transf = state_transf
 
     def __str__(self):
         return self.name
 
-    def is_applicable(self, s):
-        return self.precond(s)
-
     def apply(self, s):
         return self.state_transf(s)
 
 
-# ADD THIS PART
-# CREATE_INITIAL_STATE = lambda: State(init)
-
+# posible actions from within the state space.
+# this doesn't include the 180 degree rotations as they are more easily represented
+# a the same action done twice from a particular state
 OPERATORS = [
-    # Operator("rotate front", True, lambda s: s.rotate_front()),
-    # Operator("rotate under", True, lambda s: s.rotate_under()),
-    # Operator("rotate back", True, lambda s: s.rotate_back()),
-    # Operator("rotate left", True, lambda s: s.rotate_left()),
-    # Operator("rotate right", True, lambda s: s.rotate_right()),
-    # Operator("rotate top", True, lambda s: s.rotate_top()),
-    # Operator("rotate front inverse", True, lambda s: s.rotate_front_inverse()),
-    # Operator("rotate under inverse", True, lambda s: s.rotate_under_inverse()),
-    # Operator("rotate back inverse", True, lambda s: s.rotate_back_inverse()),
-    # Operator("rotate left inverse", True, lambda s: s.rotate_left_inverse()),
-    # Operator("rotate right inverse", True, lambda s: s.rotate_right_inverse()),
-    # Operator("rotate top inverse", True, lambda s: s.rotate_top_inverse()),
-    Operator("rotate front 180", True, lambda s: s.rotate_front_180()),
-    Operator("rotate under 180", True, lambda s: s.rotate_under_180()),
-    Operator("rotate back 180", True, lambda s: s.rotate_back_180()),
-    Operator("rotate left 180", True, lambda s: s.rotate_left_180()),
-    Operator("rotate right 180", True, lambda s: s.rotate_right_180()),
-    Operator("rotate top 180", True, lambda s: s.rotate_top_180()),
-    Operator("Exit", True, lambda s: "Is the cube solved: "+str(s.is_goal_state()))
-    ]
+    Operator("rotate front", lambda s: s.rotate_front()),
+    Operator("rotate under", lambda s: s.rotate_under()),
+    Operator("rotate back", lambda s: s.rotate_back()),
+    Operator("rotate left", lambda s: s.rotate_left()),
+    Operator("rotate right", lambda s: s.rotate_right()),
+    Operator("rotate top", lambda s: s.rotate_top()),
+    Operator("rotate front inverse", lambda s: s.rotate_front_inverse()),
+    Operator("rotate under inverse", lambda s: s.rotate_under_inverse()),
+    Operator("rotate back inverse", lambda s: s.rotate_back_inverse()),
+    Operator("rotate left inverse", lambda s: s.rotate_left_inverse()),
+    Operator("rotate right inverse", lambda s: s.rotate_right_inverse()),
+    Operator("rotate top inverse", lambda s: s.rotate_top_inverse()),
+    Operator("Exit", lambda s: "Is the cube solved: "+str(s.is_goal_state()))]
+
+# operators2 is used mainly for display purposes. has very limited state space 
+# which alows for much faster runtime on certain functions
+OPERATORS2 = [ 
+    Operator("rotate front 180", lambda s: s.rotate_front_180()),
+    Operator("rotate under 180", lambda s: s.rotate_under_180()),
+    Operator("rotate back 180", lambda s: s.rotate_back_180()),
+    Operator("rotate left 180", lambda s: s.rotate_left_180()),
+    Operator("rotate right 180", lambda s: s.rotate_right_180()),
+    Operator("rotate top 180", lambda s: s.rotate_top_180()),
+    Operator("Exit", lambda s: "Is the cube solved: "+str(s.is_goal_state()))]
